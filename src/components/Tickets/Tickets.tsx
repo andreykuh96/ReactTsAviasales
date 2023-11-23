@@ -15,30 +15,40 @@ const Tickets: React.FC = () => {
 
   const sortTickets = (arr: ITicket[]) => {
     const activeTab = tabs.find((item) => item.active);
-    const activeFilters = filters.filter((item) => item.active).map((item) => item.name);
+
+    const activeFilters: Record<string, boolean> = {};
+    filters.forEach((item) => {
+      activeFilters[item.name] = item.active;
+    });
 
     if (arr && activeTab) {
-      let copyArr = [...arr];
+      const filteredArr = arr.filter((item) => {
+        if (Object.values(activeFilters).every((filter) => !filter)) {
+        }
 
-      if (activeFilters.length === 0) {
-        return [];
-      } else if (activeFilters.includes('not')) {
-        copyArr = copyArr.filter((item) => item.segments[0].stops.length === 0 && item.segments[1].stops.length === 0);
-      } else if (activeFilters.includes('one')) {
-        copyArr = copyArr.filter((item) => item.segments[0].stops.length === 1 && item.segments[1].stops.length === 1);
-      } else if (activeFilters.includes('two')) {
-        copyArr = copyArr.filter((item) => item.segments[0].stops.length === 2 && item.segments[1].stops.length === 2);
-      } else if (activeFilters.includes('three')) {
-        copyArr = copyArr.filter((item) => item.segments[0].stops.length === 3 && item.segments[1].stops.length === 3);
-      }
+        if (activeFilters['not'] && item.segments[0].stops.length === 0 && item.segments[1].stops.length === 0) {
+          return true;
+        }
+        if (activeFilters['one'] && item.segments[0].stops.length === 1 && item.segments[1].stops.length === 1) {
+          return true;
+        }
+        if (activeFilters['two'] && item.segments[0].stops.length === 2 && item.segments[1].stops.length === 2) {
+          return true;
+        }
+        if (activeFilters['three'] && item.segments[0].stops.length === 3 && item.segments[1].stops.length === 3) {
+          return true;
+        }
+
+        return false;
+      });
 
       switch (activeTab.text) {
         case 'Самый дешевый':
-          return copyArr.sort((a, b) => a.price - b.price);
+          return filteredArr.sort((a, b) => a.price - b.price);
         case 'Самый быстрый':
-          return copyArr.sort((a, b) => Math.floor(a.segments[0].duration + a.segments[1].duration) - Math.floor(b.segments[0].duration + b.segments[1].duration));
+          return filteredArr.sort((a, b) => Math.floor(a.segments[0].duration + a.segments[1].duration) - Math.floor(b.segments[0].duration + b.segments[1].duration));
         case 'Оптимальный':
-          return copyArr;
+          return filteredArr;
         default:
           return [];
       }
