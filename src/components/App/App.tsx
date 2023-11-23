@@ -16,7 +16,6 @@ const App: React.FC = () => {
         <div className={s.contentTickets}>
           <Tabs />
           <Tickets />
-          <div className={s.button}>button</div>
         </div>
       </div>
     </div>

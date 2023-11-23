@@ -1,0 +1,32 @@
+.button {
+  padding: 15px 20px;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  background-color: #2196f3;
+  color: #fff;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.9;
+  }
+}
+.title {
+  margin: 0 0 20px 0;
+  padding: 15px 20px;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  background-color: #2196f3;
+  color: #fff;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+}
